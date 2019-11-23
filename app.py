@@ -31,6 +31,10 @@ app.config['SQLALCHEMY_DATABASE_URI'] = postgres_str
 
 db = SQLAlchemy(app)
 
+@app.route("/")
+def home():
+    
+
 
 
 
