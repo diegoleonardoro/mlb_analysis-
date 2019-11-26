@@ -52,9 +52,12 @@ def column ():
     records = db.session.query(batting.yearid, batting.h, batting.ab).filter(batting.yearid.between( "1974", "1982")).all()
     df = pd.DataFrame(records, columns=['yearid', 'h', 'ab'])
         
+    avg_1974_to1982 = df["h"]/df["ab"]
     
+    avg_1974_to1982 = [x for x in avg_1974_to1982 if str(x) != 'nan']
+
     
-    return jsonify(df["yearid"].to_dict())
+    return jsonify(list(avg_1974_to1982))
 
     
     
