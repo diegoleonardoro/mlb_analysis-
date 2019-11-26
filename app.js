@@ -18,10 +18,10 @@ d3.json(url).then(function (response){
    }
 
     var trace =  {
-  	x: [range( 0, array_lenght  )],
-  y: [response],
-  mode: 'lines',
-  name: 'Lines'
+        x: [range( 0, array_lenght  )],
+      y: [response],
+      mode: 'lines',
+      name: 'Lines'
 } 
     }
 )};
