@@ -53,7 +53,7 @@ def column ():
     df = pd.DataFrame(records, columns=['yearid', 'h', 'ab'])
         
     avg_1974_to1982 = df["h"]/df["ab"]
-    
+    #The following list returns the average of every single player from 1974 to 1982 ()
     avg_1974_to1982 = [x for x in avg_1974_to1982 if str(x) != 'nan']
 
     
