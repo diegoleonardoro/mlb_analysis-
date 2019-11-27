@@ -4,6 +4,7 @@ import sqlalchemy
 from sqlalchemy import create_engine
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.automap import automap_base
+import numpy as np
 
 
 from flask import (
@@ -49,16 +50,46 @@ def home():
 @app.route("/total_averages")
 def column ():    
     
-    records = db.session.query(batting.yearid, batting.h, batting.ab).filter(batting.yearid.between( "1974", "1982")).all()
-    df = pd.DataFrame(records, columns=['yearid', 'h', 'ab'])
+    records = db.session.query(batting.playerid, batting.yearid, batting.h, batting.ab).filter(batting.yearid.between( "1974", "1982")).all()
+    
+    
+    df = pd.DataFrame(records, columns=['playerid','yearid', 'h', 'ab'])
+    
+#    year_1974 = df [df["yearid"]== "1974"]
         
-    avg_1974_to1982 = df["h"]/df["ab"]
-    #The following list returns the average of every single player from 1974 to 1982 ()
-    avg_1974_to1982 = [x for x in avg_1974_to1982 if str(x) != 'nan']
+
+    years_1974_to_1982 = np.arange (1972, 1983)
+
+    data_by_year = []  
+    for year in years_1974_to_1982:
+        
+        x = df[df["yearid"] == year]  
+    
+        y = x ["h"] / x["ab"] 
+        data_by_year.append(x)
+    
+    return jsonify(data_by_year[0].to_dict())
+    
+    #data_by_year_ = [x for x in data_by_year if x != "NaN"]
+        
+    
 
     
-    return jsonify(list(avg_1974_to1982))
+        
+################        
+#    avg_1974_to1982 = df["h"]/df["ab"]
 
+    # The following list returns the average of every single player from 1974 to 1982 ()
+#    avg_1974_to1982 = [x for x in avg_1974_to1982 if str(x) != 'nan']
+################  
+
+
+################
+#    mario_mendoza = df [df["playerid"]=="mendoma01"]
+#    mario_mendoza_avg = mario_mendoza["h"] / mario_mendoza["ab"]
+################
+
+    
     
     
 if __name__ == "__main__":
