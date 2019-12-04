@@ -69,7 +69,6 @@
         }
         return ans;
       };
-
       var response_data = JSON.parse('{{ response | tojson}}');
 
       var trace1 = {
@@ -97,6 +96,8 @@
 
   </script>
   </div>
+
+
 
   <div id="box_chart">
     <script>
@@ -146,9 +147,6 @@
         var data = [trace1, trace2, trace3, trace4, trace5, trace6, trace7, trace8]
 
         Plotly.newPlot("box_chart", data, {}, { showSendToCloud: true });
-
-
-
 
       }
 

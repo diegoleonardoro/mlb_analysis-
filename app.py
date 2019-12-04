@@ -5,6 +5,7 @@ from sqlalchemy import create_engine
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.automap import automap_base
 import numpy as np
+from pprint import pprint
 
 
 from flask import (
@@ -50,39 +51,50 @@ def get_data ():
     df = pd.DataFrame(records, columns=['playerid','yearid', 'h', 'ab'])
     years_1974_to_1982 = np.arange (1972, 1983)
     
- #   average_by_year = []
- #   for year in years_1974_to_1982:
- #       x = df[df["yearid"] == str (year)]
- #       try:
- #           y = sum (x ["h"]) /sum ( x["ab"])
- #       except ZeroDivisionError:
- #           continue
- #       average_by_year.append(y)
+    average_by_year = []
+    for year in years_1974_to_1982:
+        x = df[df["yearid"] == str (year)]
+        try:
+            y = sum (x ["h"]) /sum ( x["ab"])
+        except ZeroDivisionError:
+            continue
+        average_by_year.append(y)
 
- #   mario_mendoza = df [df["playerid"]=="mendoma01"]
- #   mario_mendoza_avg = mario_mendoza["h"] / mario_mendoza["ab"] 
- #   mario_mendoza_avg = mario_mendoza_avg.values.tolist()
+    mario_mendoza = df [df["playerid"]=="mendoma01"]
+    mario_mendoza_avg = mario_mendoza["h"] / mario_mendoza["ab"] 
+    mario_mendoza_avg = mario_mendoza_avg.values.tolist()
 
 
     #query database to get all years:
-#    all_records = db.session.query(batting.playerid, batting.yearid, batting.h, batting.ab).all()
-#    entire_df = pd.DataFrame(all_records, columns=['playerid','yearid', 'h', 'ab'])   
-    
-    
+    all_records = db.session.query(batting.playerid, batting.yearid, batting.h, batting.ab).all()
+    entire_df = pd.DataFrame(all_records, columns=['playerid','yearid', 'h', 'ab'])   
+    pprint(entire_df)
 
-#    total_years = np.arange (1871, 2019)
-#    all_years_avgs_ = []
-#    for year in total_years:
-#        x = entire_df [entire_df["yearid"] == year]
-#        try:
-#           avg = sum (x["h"]) / sum (x["ab"])
-#        except ZeroDivisionError:
-#            continue
-#        all_years_avgs_.append (avg)
+   
+    #1871
+    total_years = np.arange (1871, 2019)
+    all_years_avgs_ = []
+    for year in total_years:
+        #print("current year: ",str(year))
+        x = entire_df [entire_df["yearid"] == str(year)]
+        #pprint(x)
+        try:
+            #print("calcing")
+            #pprint(x["h"])
+            avg = sum (x["h"]) / sum (x["ab"])
+        except ZeroDivisionError:
+            continue
+        all_years_avgs_.append (avg)
+
+    #return jsonify(all_years_avgs_)
+
+    samples_every_18_years = [all_years_avgs_[i:i+18] for i in range(0, len(all_years_avgs_), 18)] 
+    avgs_every_18_years = [sum(x)/len (x) for x in samples_every_18_years]
+
+ # -------------- #
 
 
-   # samples_every_18_years = [all_years_avgs_[i:i+18] for i in range(0, len(all_years_avgs_), 18)] 
-   # avgs_every_18_years = [sum(x)/len (x) for x in samples_every_18_years]
+
 
 
     #Create a new column with the average of every player, and calculate the std off that new column:
@@ -104,9 +116,10 @@ def get_data ():
  #       mendo_zscores.append (str (zscore))
 
     
-   # mendoza_avg_vs_mlb = {"mendonza_average":mario_mendoza_avg, "average_by_year_74_to_82":average_by_year, "averages_every_18_years":avgs_every_18_years}
-    return jsonify (df.to_dict())
-    #return render_template("mendoza_averages.html",  response=mendoza_avg_vs_mlb)
+    mendoza_avg_vs_mlb = {"mendonza_average":mario_mendoza_avg, "average_by_year_74_to_82":average_by_year, "averages_every_18_years":avgs_every_18_years, "samples_every_18_years":samples_every_18_years}
+    
+    #return jsonify (samples_every_18_years)
+    return render_template("mendoza_averages.html",  response=mendoza_avg_vs_mlb)
 
 
     
