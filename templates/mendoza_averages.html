@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Mario Mendoza Averages</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+
+<body>
+  <h2>Mario Mendoza VS MLB Averages</h2>
+  <h3>What is Mendoza Line?</h3>
+  <p>The Mendoza Line is an expression in baseball deriving from the name of shortstop Mario Mendoza, whose poor
+    batting
+    average is taken to define the threshold of incompetent hitting.</p>
+
+
+  <div id="mendoza_avgs">
+
+    <script>
+
+      function buildFirstPlot() {
+
+        var response_data = JSON.parse('{{ response | tojson}}');
+
+        function range(start, end) {
+          var ans = [];
+          for (let i = start; i <= end; i++) {
+            ans.push(i);
+          }
+          return ans;
+        };
+
+        var trace1 = {
+          x: range(1974, 1982),
+          y: response_data.average_by_year_74_to_82,
+          type: "scatter",
+          name: 'MLB Average'
+        };
+
+        var trace2 = {
+          x: range(1974, 1982),
+          y: response_data.mendonza_average,
+          type: "scatter",
+          name: 'Mendoza Average'
+        };
+        var data = [trace1, trace2]
+        Plotly.newPlot('mendoza_avgs', data, {}, { showSendToCloud: true });
+
+      };
+      buildFirstPlot()
+
+    </script>
+
+  </div>
+
+
+  <div id="mendoza_vs_mlv"></div>
+  <script>
+    function BuildSecondPlot() {
+
+      function range(start, end) {
+        var ans = [];
+        for (let i = start; i <= end; i++) {
+          ans.push(i);
+        }
+        return ans;
+      };
+
+      var response_data = JSON.parse('{{ response | tojson}}');
+
+      var trace1 = {
+        x: range(0, 9),
+        y: response_data.averages_every_18_years,
+        type: "scatter",
+        name: 'MLB AVG from 1871 to 2018'
+      };
+
+      var trace2 = {
+        x: range(0, 9),
+        y: response_data.mendonza_average,
+        type: "scatter",
+        name: 'Mendoza Average'
+      };
+
+      var data = [trace1, trace2]
+      Plotly.newPlot('mendoza_vs_mlv', data, {}, { showSendToCloud: true });
+
+
+    }
+    BuildSecondPlot()
+
+
+
+  </script>
+  </div>
+
+  <div id="box_chart">
+    <script>
+
+      var response_data = JSON.parse('{{ response | tojson}}');
+      function BuildThirdPlot() {
+
+        var trace1 = {
+          y: response_data.samples_every_18_years[0],
+          type: 'box'
+        };
+
+        var trace2 = {
+          y: response_data.samples_every_18_years[1],
+          type: 'box'
+        };
+
+        var trace3 = {
+          y: response_data.samples_every_18_years[2],
+          type: 'box'
+        };
+
+        var trace4 = {
+          y: response_data.samples_every_18_years[3],
+          type: 'box'
+        };
+
+        var trace5 = {
+          y: response_data.samples_every_18_years[4],
+          type: 'box'
+        };
+
+        var trace6 = {
+          y: response_data.samples_every_18_years[5],
+          type: 'box'
+        };
+        var trace7 = {
+          y: response_data.samples_every_18_years[6],
+          type: 'box'
+        };
+        var trace8 = {
+          y: response_data.samples_every_18_years[7],
+          type: 'box'
+        };
+
+
+        var data = [trace1, trace2, trace3, trace4, trace5, trace6, trace7, trace8]
+
+        Plotly.newPlot("box_chart", data, {}, { showSendToCloud: true });
+
+
+
+
+      }
+
+      BuildThirdPlot()
+
+    </script>
+
+  </div>
+
+
+</body>
+
+</html

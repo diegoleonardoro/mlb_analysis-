@@ -1,76 +1,133 @@
 <!DOCTYPE html>
 <html>
-<body style="background-color:rgb(72, 145, 141);">
+
+<head>
+    <meta charset="UTF-8">
+    <title>MLB Analysis</title>
+</head>
 
 
-<h2 align="center">Meet Mario Mendoza </h2>
-<p>Mario Mendoza Aizpuru is a Mexican former professional baseball infielder. Mendoza, a lifetime .215 hitter, is best known for being the source of the name for the threshold for batting ineptitude, the "Mendoza Line", meaning a batting average of .200. 
-<a href="https://en.wikipedia.org/wiki/Mario_Mendoza">Wikipedia</a></p>
-<hr>
-    
- <div class="row">
-  <div class="column">
-    <img src="https://i.pinimg.com/originals/0b/c3/d4/0bc3d4dc9f85deb7f3b994c8305b4528.jpg">
-    <img src="https://not.fangraphs.com/wp-content/uploads/sites/2/2011/12/mariomendoza.jpeg">
-    <img src="http://www.mlb.com/assets/images/2/2/0/219241220/cuts/Mendoza_edluyx7z_8x2trvem.png">
-  </div>
-  <div class="column">
-    <img src="https://i.pinimg.com/originals/6c/e4/09/6ce409208ed631365ea4b1f5b171e9ae.jpg">
-    <img src="https://bill37mccurdy.files.wordpress.com/2015/08/mario-mendoza.jpg">
-    <img src="http://thesportdigest.com/wp-content/uploads/2017/03/The-15-Worst-MLB-Players-Ever-1.-Mario-Mendoza-1.jpg?w=640">
-  </div>
 
- </div>
- 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js"></script>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="{{url_for('filename='app.js')}}"></script> 
-    
- 
- <div id="mendo_plot"> </div>
-    
- <style>
-  .row {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0 4px;
-  justify-content: left;
-}
-     
-     .column {
-  flex: 25%;
-  max-width: 25%;
-  padding: 0 4px;
-}
-     
-     .column img {
-  margin-top: 8px;
-  vertical-align: right;
-  width: 100%;
-}
-     
-     @media screen and (max-width: 800px) {
-  .column {
-    flex: 50%;
-    max-width: 50%;
-  }
-}
-     
-     @media screen and (max-width: 600px) {
-  .column {
-    flex: 100%;
-    max-width: 100%;
-  }
-}
-     
-     
- </style>
-    
-    <h3>What is Mendoza Line?</h3>
-    <p>The Mendoza Line is an expression in baseball deriving from the name of shortstop Mario Mendoza, whose poor batting average is taken to define the threshold of incompetent hitting.
-    <a href="https://en.wikipedia.org/wiki/Mendoza_Line">Wikipedia</a></p>
-    <hr>
+<body>
+    <h2 class="title"> MLB Historic Analysis</h2>
+    <p class="paragraph">This platform uses MLB data from 1874 to 2018 to show trends and facts that will provide a
+        better understanding of
+        the MLB. Most of the data is compared to what is known in the MLB as the Mendoza Line</p>
 
+    <h2 class="title"> What is the Mendoza Line? </h2>
+    <p class="paragraph"> From 1974 to 1982 Mario Mendoza was a professional MLB player. He is known for having the
+        lowest batting average
+        in MLB history. Professional MLB players often say that as long as you batting average is not lower than
+        Mendoza’s
+        you still can be a player. </p>
+
+    <div class="grid-container">
+
+
+        <div class="column">
+
+            <div class="image-container">
+                <a>
+                    <img src="images/mendoza1.jpg" alt="Mendoza" height="480" width="480" class=“image”>
+                </a>
+                <div class="overlay">
+                    <div class="text1">Mendoza VS Historic Data</div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="column">
+            <div class="image-container">
+                <img src="images/mendoza2.jpg" alt="Mendoza" height="480" width="500" class=“image”>
+                <div class="overlay">
+                    <div class="text1">Other Data</div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <style>
+        .grid-container {
+            display: flex;
+            position: relative;
+            width: 50%;
+            margin-left: auto;
+            margin-right: auto;
+
+        }
+
+        .column {
+            padding: 5px;
+            flex-wrap: wrap;
+            padding: 0 4px;
+
+        }
+
+        /* The following sets the fade effect for the images:  */
+        .image-container {
+            position: relative;
+            width: 50%;
+        }
+
+        .image {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 99.2%;
+            width: 200%;
+            opacity: 0;
+            transition: .5s ease;
+            background-color: #008CBA;
+        }
+
+        .image-container:hover .overlay {
+            opacity: 1;
+        }
+
+        .text1 {
+            color: white;
+            font-size: 20px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        /* The above sets the fade effect for the images:  */
+        .paragraph {
+            margin-bottom: 100px;
+            margin-right: 350px;
+            margin-left: 350px;
+            font-size: 20px;
+            background-color: rgb(220, 238, 244);
+        }
+
+
+        .title {
+            text-align: center;
+
+            margin-top: 100px;
+
+        }
+    </style>
 
 </body>
-</html
+
+</html>
