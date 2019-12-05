@@ -28,8 +28,15 @@ postgres_str = ('postgresql://{username}:{password}@{ipaddress}:{port}/{dbname}'
 engine = create_engine(postgres_str)
 #create Flask Postgres connection:
 app = Flask (__name__)
+
 app.config['SQLALCHEMY_DATABASE_URI'] = postgres_str
+
+# DATABASE_URL will contain the database connection string:
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgres://iliraydnrlzapj:ba13fda65e251bf10b078f4afa008d625c25a69995c5ca69485cf45627378c5c@ec2-174-129-255-4.compute-1.amazonaws.com:5432/d28umiqbj9nbbb')
+
+# Connects to the database using the app config
 db = SQLAlchemy(app)
+
 #reflect an existing database into a new model
 Base = automap_base()
 #reflect the tables

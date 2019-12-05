@@ -1,0 +1,1 @@
+FLASK_APP=columbia-themendozaline/app.py flask run
