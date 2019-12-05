@@ -60,7 +60,6 @@
   <div class="observations">
     <ul>
       <li> 1981 was one of Mendoza's best years but MLB's worst</li>
-      <li>Mendoza was never able to catch up with the general batting average</li>
       <li>Mendoza's last year was his worst</li>
     </ul>
   </div>
@@ -99,8 +98,8 @@
 
       var layout = {
 
-        ticktext: ['1871 to 1886', '1886 to 1901 ', '1901 to 1919', '1919 to 1937',
-          '1937 to 1955', '1955 to 1973', '1973 to 1991', '1991 to 2009', '2009 to 2018']
+        ticktext: ['1871 to 1886', '1887 to 1901 ', '1902 to 1919', '1920 to 1937',
+          '1938 to 1955', '1956 to 1973', '1974 to 1991', '1992 to 2009', '2010 to 2018']
 
       }
 
@@ -116,7 +115,6 @@
 
   <div class="observations">
     <ul>
-      <li> MLB averages from 1871 to 2018 have had the same trend as the time when Mendoza was a player</li>
       <li> Years 1955 to 1973 had the worst batting average and it almost touched the Mendoza Line </li>
 
     </ul>
@@ -130,57 +128,66 @@
       var response_data = JSON.parse('{{ response | tojson}}');
       function BuildThirdPlot() {
 
-        var trace1 = {
+        var _1871_to_1886 = {
           y: response_data.samples_every_18_years[0],
-          type: 'box'
+          type: 'box',
+          name: '1871 to 1886',
         };
 
-        var trace2 = {
+        var _1887_to_1901 = {
           y: response_data.samples_every_18_years[1],
-          type: 'box'
+          type: 'box',
+          name: '1887 to 1901',
         };
 
-        var trace3 = {
+        var _1902_to_1919 = {
           y: response_data.samples_every_18_years[2],
-          type: 'box'
+          type: 'box',
+          name: '1902 to 1919',
         };
 
-        var trace4 = {
+        var _1920_to_1937 = {
           y: response_data.samples_every_18_years[3],
-          type: 'box'
+          type: 'box',
+          name: '1920 to 1937',
         };
 
-        var trace5 = {
+        var _1938_to_1955 = {
           y: response_data.samples_every_18_years[4],
-          type: 'box'
+          type: 'box',
+          name: '1938 to 1955',
         };
 
-        var trace6 = {
+        var _1956_to_1973 = {
           y: response_data.samples_every_18_years[5],
-          type: 'box'
+          type: 'box',
+          name: '1973 to 1956',
         };
-        var trace7 = {
+        var _1974_to_1991 = {
           y: response_data.samples_every_18_years[6],
-          type: 'box'
+          type: 'box',
+          name: '1974 to 1991',
         };
-        var trace8 = {
+        var _1992_to_2009 = {
           y: response_data.samples_every_18_years[7],
-          type: 'box'
+          type: 'box',
+          name: '1992 to 2009',
+        };
+
+        var _2010_to_2018 = {
+          y: response_data.samples_every_18_years[8],
+          type: 'box',
+          name: '2010 to 2018',
         };
 
 
-        var data = [trace1, trace2, trace3, trace4, trace5, trace6, trace7, trace8]
+        var data = [_1871_to_1886, _1887_to_1901, _1902_to_1919, _1920_to_1937, _1938_to_1955, _1956_to_1973, _1974_to_1991, _1992_to_2009, _2010_to_2018]
 
-        var layout = {
 
-          ticktext: ['1871 to 1886', '1886 to 1901 ', '1901 to 1919', '1919 to 1937',
-            '1937 to 1955', '1955 to 1973', '1973 to 1991', '1991 to 2009', '2009 to 2018']
 
-        }
+        Plotly.newPlot("box_chart", data, {}, { showSendToCloud: true });
 
-        Plotly.newPlot("box_chart", data, layout, {}, { showSendToCloud: true });
-
-      }
+      };
 
       BuildThirdPlot()
 
@@ -190,7 +197,7 @@
   <div class="observations">
     <ul>
       <li> Years 1886 to 1901 have the best batting average and it has not been surpassed </li>
-      <li> The first decades had more outliers</li>
+      <li> The first decades, batting averages were more dispersed</li>
 
     </ul>
   </div>
