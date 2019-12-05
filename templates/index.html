@@ -4,9 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <title>MLB Analysis</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 
-
+<main>
+    <div class="header-img" style="height: 600px; "></div>
+</main>
 
 <body>
     <h2 class="title"> MLB Historic Analysis</h2>
@@ -27,12 +31,17 @@
         <div class="column">
 
             <div class="image-container">
-                <a href="http://127.0.0.1:5000/mendoza_averages">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROcwvdPPQ7fyfBkSW9e-OC7SlGvyfhKMxg05vmkIm5i18kdGGi&s"
-                        alt="Mendoza" height="480" width="480" class=“image”>
-                </a>
+
+                <img src="https://raw.githubusercontent.com/diegoleonardoro/mlb_analysis-/master/templates/images/mendoza1.jpg"
+                    alt="Mendoza" height="450" width="480" class=“image”>
+
+
                 <div class="overlay">
-                    <div class="text1">Mendoza VS Historic Data</div>
+                    <a href="http://127.0.0.1:5000/mendoza_averages">
+
+                        <div class="text1">Mendoza VS Historic Data</div>
+                    </a>
+
                 </div>
             </div>
 
@@ -41,7 +50,8 @@
 
         <div class="column">
             <div class="image-container">
-                <img src="images/mendoza2.jpg" alt="Mendoza" height="480" width="500" class=“image”>
+                <img src="https://raw.githubusercontent.com/diegoleonardoro/mlb_analysis-/master/templates/images/mendoza2.jpg"
+                    alt="Mendoza" height="450" width="500" class=“image”>
                 <div class="overlay">
                     <div class="text1">Other Data</div>
                 </div>
@@ -52,21 +62,85 @@
 
     </div>
 
+    <div id="zscores">
+        <script>
+            var response_data = JSON.parse('{{ response | tojson}}');
+            var x_axis_data = response_data.year;
+            var y_axis_daya = response_data.zscore;
+
+
+
+            var trace1 = {
+                type: "scatter",
+                mode: "lines",
+                name: 'Mendoza Z Scores',
+                fill: 'tonexty',
+                x: x_axis_data,
+                y: y_axis_daya,
+                line: { color: 'ffc6c4' }
+            }
+
+            var data = [trace1];
+
+            var layout = {
+                title: 'Mendoza zscores from 1871 to 2018',
+                xaxis: {
+                    showgrid: false
+                },
+
+                yaxis: {
+                    range: [-4, 1],
+                    showgrid: false
+                },
+                legend: {
+                    orientation: 'h',
+                    x: 0.5,
+                    y: 1.2,
+                    xanchor: 'center'
+                },
+                updatemenus: [{
+                    x: 0.5,
+                    y: 0,
+                    yanchor: "top",
+                    xanchor: "center",
+                    showactive: false,
+                    direction: "left",
+                    type: "buttons",
+                    pad: { "t": 87, "r": 10 },
+
+
+                }]
+            };
+
+            Plotly.newPlot('zscores', data, layout).then(function () {
+                Plotly.addFrames('zscores', response_data);
+            });
+
+
+
+        </script>
+
+    </div>
+
+
+
+
 
     <style>
         .grid-container {
             display: flex;
             position: relative;
-            width: 50%;
+            width: 70%;
             margin-left: auto;
-            margin-right: auto;
-
+            margin-right: auto
         }
 
         .column {
             padding: 5px;
             flex-wrap: wrap;
             padding: 0 4px;
+
+
 
         }
 
@@ -114,18 +188,25 @@
         /* The above sets the fade effect for the images:  */
         .paragraph {
             margin-bottom: 100px;
-            margin-right: 350px;
-            margin-left: 350px;
+            margin-right: 200px;
+            margin-left: 200px;
             font-size: 20px;
             background-color: rgb(220, 238, 244);
         }
 
 
         .title {
-            text-align: center;
 
+            margin-left: 200px;
             margin-top: 100px;
 
+        }
+
+        .header-img {
+            width: 100%;
+            height: 400px;
+            background: url('https://raw.githubusercontent.com/diegoleonardoro/mlb_analysis-/master/templates/images/online-baseball-simulation-game-slider2.jpg');
+            background-size: cover;
         }
     </style>
 

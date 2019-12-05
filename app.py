@@ -41,7 +41,53 @@ batting = Base.classes.batting
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+
+    all_records = db.session.query(batting.playerid, batting.yearid, batting.h, batting.ab).all()
+    entire_df = pd.DataFrame(all_records, columns=['playerid','yearid', 'h', 'ab']) 
+
+ #Create a new column with the average of every player, and calculate the std off that new column:
+    
+    entire_df["AVG"] = entire_df["h"] / entire_df["ab"] 
+
+    total_years = np.arange (1871, 2019)
+   #calculate all yeats averages: 
+
+    all_years_avgs_ = []
+    for year in total_years:
+        x = entire_df [entire_df["yearid"] == str(year)]
+        try:
+            avg = sum (x["h"]) / sum (x["ab"])
+        except ZeroDivisionError:
+            continue
+        all_years_avgs_.append (avg)
+
+    pprint(len (all_years_avgs_))
+
+   # calculate std:
+    std_per_year = []
+    for year in total_years:
+        x = entire_df[entire_df["yearid"]== str (year)]
+        std = np.std (x["AVG"])
+        std_per_year.append (std)
+
+    pprint(len (std_per_year))
+
+    # zscore = x - mean / std 
+    mendo_avg = 0.21465968586387435
+    mendo_zscores = {}
+    mendo_zscores["year"] = []
+    mendo_zscores["zscore"] = []
+    for year,avg, std in zip(total_years, all_years_avgs_, std_per_year ):
+        zscore = mendo_avg - avg / std
+        mendo_zscores["year"].append (int (year))
+        mendo_zscores["zscore"].append(float (zscore))
+ 
+    pprint(mendo_zscores)
+
+    return render_template("index.html",  response=mendo_zscores)
+
+
+
 
 
 @app.route("/mendoza_averages")
@@ -93,27 +139,6 @@ def get_data ():
 
  # -------------- #
 
-
-
-
-
-    #Create a new column with the average of every player, and calculate the std off that new column:
-    
- #   entire_df["AVG"] = entire_df["h"] / entire_df["ab"] 
-
-    
- #   std_per_year = []
- #   for year in total_years:
- #       x = entire_df[entire_df["yearid"]==year]
- #       std = np.std (x["AVG"])
- #       std_per_year.append (str (std))
-
-    # zscore = x - mean / std 
- #   mendo_avg = 0.21465968586387435
- #   mendo_zscores = []
- #   for avg, std in zip(all_years_avgs_, std_per_year):
- #       zscore = mendo_avg - avg / std
- #       mendo_zscores.append (str (zscore))
 
     
     mendoza_avg_vs_mlb = {"mendonza_average":mario_mendoza_avg, "average_by_year_74_to_82":average_by_year, "averages_every_18_years":avgs_every_18_years, "samples_every_18_years":samples_every_18_years}
