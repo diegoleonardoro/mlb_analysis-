@@ -224,7 +224,11 @@
 
     var drop_down_data = "this variable has to contain the values that I want in the dropdown"
     var data_that_will_go_in_table = "this variable has to have the data that we will put in the table "
+    
+    // data_that_will_go_in_table = { "name" : ___ , "team": ___, "time_frame": ___, "years_active": ___, "batting_average":___ }
 
+    // The following section is assigning the values that will go in the dropdow menu
+    // We are using the drop_down_data variable, which is supposed to contain the "time_frame" values
     d3.select("#selectButton")
       .selectAll("myOptions")
       .data(drop_down_data)
@@ -240,10 +244,10 @@
       .selectAll("tr")
       .data(data_that_will_go_in_table) // this contains the data that will go in every row 
       .enter()                          // meaning the key and the value, i.e: {"team": "red socks"}
-      .append("tr");
+      .append("tr");                    // data_that_will_go_in_table = { "name" : ___ , "team": ___, "time_frame": ___, "years_active": ___, "batting_average":___ }
 
-    var td = tr.selectAll("td")  // this varaible is meant to assing the values in each table cell
-      .data(function (d, i) { return Object.values(d); })
+    var td = tr.selectAll("td")                              // this varaible is meant to assing the values in each table cell.
+      .data(function (d, i) { return Object.values(d); })    // this is injecting the dictionary values to the table.
       .enter().append("td")
       .text(function (d) { return d; });
 
@@ -251,7 +255,14 @@
     // Now I need to create a function that updates the chart:
 
     function update(selectedYear) {
-      var dataFilter = data.filter()
+      
+      // data_that_will_go_in_table = { "name" : ___ , "team": ___, "time_frame": ___, "years_active": ___, "batting_average":___ }
+      var dataFilter = data_that_will_go_in_table.filter(function(d){return(d.time_frame == selectedYear))
+      
+      
+      
+      
+
 
 
     }
