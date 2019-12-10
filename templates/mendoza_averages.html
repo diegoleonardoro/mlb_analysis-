@@ -201,16 +201,70 @@
 
     </ul>
   </div>
-
   <hr>
 
+  <!-------------------------------------------------------------------------------------->
+
+  <!--This is the <select> tag to which I will add the values in the dropdown-->
+  <select id="selectButton"></select>
+
+  <div class=" table">
+    <!-- here we are creating the table to which we will append the values: -->
+
+    <table class="objecttable">
+      <tbody> </tbody>
+    </table>
+
+  </div>
+
+  <!-------------------------------------------------------------------------------------->
+
+  <script>
+    var response_data = JSON.parse('{{ response | tojson}}');
+
+    var drop_down_data = "this variable has to contain the values that I want in the dropdown"
+    var data_that_will_go_in_table = "this variable has to have the data that we will put in the table "
+
+    d3.select("#selectButton")
+      .selectAll("myOptions")
+      .data(drop_down_data)
+      .enter()
+      .append("option")
+      .text(function (d) { return d; }) // this will assign the text that will go in the dropdown
+      .attr("value", function (d) { return d; }) // "Corresponding value returned by the button"
+
+    // I need to plot the default table:
+    // Let's first create the table rows:
+
+    var tr = d3.select(".objecttable tbody")
+      .selectAll("tr")
+      .data(data_that_will_go_in_table) // this contains the data that will go in every row 
+      .enter()                          // meaning the key and the value, i.e: {"team": "red socks"}
+      .append("tr");
+
+    var td = tr.selectAll("td")  // this varaible is meant to assing the values in each table cell
+      .data(function (d, i) { return Object.values(d); })
+      .enter().append("td")
+      .text(function (d) { return d; });
+
+
+    // Now I need to create a function that updates the chart:
+
+    function update(selectedYear) {
+      var dataFilter = data.filter()
+
+
+    }
 
 
 
 
 
 
+  </script>
 
+
+  <hr>
   <style>
     .observations {
       position: relative;
