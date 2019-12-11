@@ -259,15 +259,34 @@
       // data_that_will_go_in_table = { "name" : ___ , "team": ___, "time_frame": ___, "years_active": ___, "batting_average":___ }
       var dataFilter = data_that_will_go_in_table.filter(function(d){return(d.time_frame == selectedYear))
       
-      // With the new filtered data, we now need to 
+      // With the new filtered data, we now need to update the "tr" and "td" variables, which were set to create the default variable:
       
+      tr
+        .datum (dataFilter)
+        .transition()
+        .duration (1000)
       
+      td  
+        tr.selectAll("td")                             
+        .data(function (d, i) { return Object.values(d); })    
+        .enter().append("td")
+        .text(function (d) { return d; });
+                                                                     
+      }
+                                                                     
+      // Create the button that will change the table
+        
+      d3.select ("#selectButton").on("change", function(d) {
+        var selectedOption = d3.select(this).property("value")
+        update(selectedOption)  
+      }
+        
       
       
 
 
 
-    }
+    
 
 
 
