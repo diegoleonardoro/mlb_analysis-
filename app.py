@@ -142,11 +142,11 @@ def get_data ():
 
         u= max (x["AVG"])
         year_ = x["yearid"].iloc[0]
-        #max_.append (u + year_)
+        # max_.append (u + year_)
 
-        pprint (u)
-        pprint (year_)
-        pprint ("-"*100)
+        # pprint (u)
+        # pprint (year_)
+        # pprint ("-"*100)
 
         try:
             avg = sum (x["h"]) / sum (x["ab"])
@@ -167,20 +167,38 @@ def get_data ():
 
 # -------------- Let's divide the dataframe every 18 years:
  
-#    years_every_18 = np.arange (1871, 2019, 18)
-#    entire_df ["yearid"] = entire_df ["yearid"].apply(pd.to_numeric)
-#    entire_df_divided_by_18_years = [] 
+    years_every_18 = np.arange (1871, 2019, 18)
+    entire_df ["yearid"] = entire_df ["yearid"].apply(pd.to_numeric)
 
-#    for year in years_every_18:
-#        x = entire_df [(entire_df ["yearid"]>=year) & (entire_df ["yearid"]< year + 18 )]
-       # x = x [x["AVG"]!=1.0]
-#        max_avg = max (x["AVG"])
-#        max_rows =  x[ x["AVG"]== max_avg]
-#        pprint (max_rows)
-#        pprint ("--"*600)
-#        entire_df_divided_by_18_years.append (x)
+
+    #entire_df_divided_by_18_years_list = [] 
+
+    entire_df_divided_by_18_years ={}
+    for year in years_every_18:
+        x = entire_df [(entire_df ["yearid"]>=year) & (entire_df ["yearid"]< year + 18 )]
+        x = x [x["AVG"]!=1.0]
+        max_avg = max (x["AVG"])
+        max_rows =  x[ x["AVG"]== max_avg]
+        max_rows = max_rows.head(1)
+        
+        #columns = max_rows.columns 
+        #values = max_rows.values
+        #entire_df_divided_by_18_years_list.append (max_rows)
+        
+        pprint (max_rows.to_dict("records"))
+        pprint ("----")
+        
+        dicts= max_rows.to_dict("records")
+        entire_df_divided_by_18_years.append (dicts)
+
+        #entire_df_divided_by_18_years [max_rows.columns()] = max_rows.values()
+        #pprint (max_rows.reset_index())
+        #entire_df_divided_by_18_years.append(max_rows)
+
+    return jsonify (entire_df_divided_by_18_years)
+    #return jsonify (entire_df_divided_by_18_years_list[0].to_dict())
     
- # --------------  #
+# --------------  #
 
 
 
@@ -195,16 +213,13 @@ def get_data ():
  #       max_avgs_every_18_years.append (max_avg)
  #       min_avgs_every_18_years.append (min_avg)
 
-
-   ##  pprint (max_avgs_every_18_years)
-
+ ##  pprint (max_avgs_every_18_years)
  # --------------  #
 
 
 
     
 # -------------- Let's return only the values that match the maximim or minimum averages
-
  #   max_rows = []
  #   min_rows = []
  #   for max_, min_, data in zip (max_avgs_every_18_years, min_avgs_every_18_years, entire_df_divided_by_18_years):
@@ -212,22 +227,19 @@ def get_data ():
  #       min_row = data [data["AVG"] == float (min_)]        
  #       max_rows.append (max_row)
  #       min_rows.append (min_row)
-
  # --------------  #
 
 
 
 
-
-    
  # --------------  #
     
     mendoza_avg_vs_mlb = {"mendonza_average":mario_mendoza_avg, "average_by_year_74_to_82":average_by_year, "averages_every_18_years":avgs_every_18_years, "samples_every_18_years":samples_every_18_years}
     
     #return jsonify (entire_df_divided_by_18_years[0].to_dict())
+    #return render_template("mendoza_averages.html",  response=mendoza_avg_vs_mlb)
 
-    return render_template("mendoza_averages.html",  response=mendoza_avg_vs_mlb)
-
+    
 
     
             
