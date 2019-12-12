@@ -171,25 +171,25 @@ def get_data ():
     entire_df ["yearid"] = entire_df ["yearid"].apply(pd.to_numeric)
 
 
-    #entire_df_divided_by_18_years_list = [] 
+    
 
-    entire_df_divided_by_18_years ={}
+    entire_df_divided_by_18_years =[ ]
     for year in years_every_18:
         x = entire_df [(entire_df ["yearid"]>=year) & (entire_df ["yearid"]< year + 18 )]
         x = x [x["AVG"]!=1.0]
         max_avg = max (x["AVG"])
         max_rows =  x[ x["AVG"]== max_avg]
-        max_rows = max_rows.head(1)
+        max_rows = max_rows.head(1) # this contains a data frame with just one record (the one that contains the max "AVG")
         
-        #columns = max_rows.columns 
-        #values = max_rows.values
-        #entire_df_divided_by_18_years_list.append (max_rows)
+        entire_df_divided_by_18_years.apped(dict(max_rows)) # This is supposed to append all dictionaries to a list 
+        
+     
         
         pprint (max_rows.to_dict("records"))
         pprint ("----")
         
         dicts= max_rows.to_dict("records")
-        entire_df_divided_by_18_years.append (dicts)
+        entire_df_divided_by_18_years = dicts #this is appending only the last dictionary because as it loops, it overwrites records. 
 
         #entire_df_divided_by_18_years [max_rows.columns()] = max_rows.values()
         #pprint (max_rows.reset_index())
