@@ -169,11 +169,15 @@ def get_data ():
  
     years_every_18 = np.arange (1871, 2019, 18)
     entire_df ["yearid"] = entire_df ["yearid"].apply(pd.to_numeric)
-
-
+    # the following three lines are gonna create the values that will go in the dropdow menu:
+    labels_for_dropdow = ["1871 to 1889", "1890 to 1908","1909 to 1927","1928 to 1946","1947 to 1965","1966 to 1984","1985 to 2003","2004 to 2018"]
+    year_bins = np.arange (1871,2019,18)
+    year_bins_column = pd.cut(entire_df["yearid"], year_bins, labels =labels_for_dropdow)
+    entire_df ["year_range"] = year_bins_column
     
 
-    entire_df_divided_by_18_years =[ ]
+
+    entire_df_divided_by_18_years =[] # this list contains dictionaries with the following values: ['playerid','yearid', 'h', 'ab']
     for year in years_every_18:
         x = entire_df [(entire_df ["yearid"]>=year) & (entire_df ["yearid"]< year + 18 )]
         x = x [x["AVG"]!=1.0]
@@ -183,20 +187,10 @@ def get_data ():
         
         entire_df_divided_by_18_years.apped(dict(max_rows)) # This is supposed to append all dictionaries to a list 
         
-     
-        
-        pprint (max_rows.to_dict("records"))
-        pprint ("----")
-        
-        dicts= max_rows.to_dict("records")
-        entire_df_divided_by_18_years = dicts #this is appending only the last dictionary because as it loops, it overwrites records. 
 
-        #entire_df_divided_by_18_years [max_rows.columns()] = max_rows.values()
-        #pprint (max_rows.reset_index())
-        #entire_df_divided_by_18_years.append(max_rows)
 
-    return jsonify (entire_df_divided_by_18_years)
-    #return jsonify (entire_df_divided_by_18_years_list[0].to_dict())
+     return jsonify (entire_df_divided_by_18_years)
+   
     
 # --------------  #
 
